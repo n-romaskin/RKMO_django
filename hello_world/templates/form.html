@@ -1,0 +1,14 @@
+<form method="_GET">
+  <select name="selectedSpec">
+    {% for key,value in specsList.items %}
+      <option value="{{ key }}"{% if key == selectedSpec %} selected{% endif %}>{{ value }}</option>
+    {% endfor %}
+  </select>
+  <select name="selectedPayment">
+    {% for key,value in paymentList.items %}
+      <option value="{{ key }}"{% if key == selectedPayment %} selected{% endif %}>{{ value }}</option>
+    {% endfor %}
+  </select>
+  <input type="hidden" name="json" value="0" />
+  <input type="submit" value="Find me!">
+</form>
