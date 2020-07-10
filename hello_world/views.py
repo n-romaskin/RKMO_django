@@ -82,7 +82,8 @@ def hello_world(request):
     row = START_ROW
     while (sheet['B'+str(row)].value and row < LIMIT_ROWS):
         score = sheet['L'+str(row)].value.capitalize()
-        if score:
+        status = sheet['P'+str(row)].value.capitalize()
+        if (score and status == 'Принято к рассмотрению'):
             score = float(score)
             name = sheet['B'+str(row)].value.capitalize()
             surname = sheet['C'+str(row)].value.capitalize()
