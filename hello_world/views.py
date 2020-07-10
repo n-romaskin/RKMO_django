@@ -55,7 +55,7 @@ def hello_world(request):
             selectedSpecName = specsList[selectedSpec]
     if(request.GET.get('selectedPayment')):
         selectedPayment = 0
-        if(int(request.GET.get('selectedPayment'))<paymentListLen):
+        if(int(request.GET.get('selectedPayment')) < paymentListLen):
             selectedPayment = int(request.GET.get('selectedPayment'))
         selectedPaymentName = paymentList[selectedPayment]
 
@@ -92,15 +92,26 @@ def hello_world(request):
             specKey = specsListReversed[spec]
             payment = sheet['M'+str(row)].value.capitalize()
             paymentKey = paymentListReversed[payment]
-            fullDataObj[specKey].get('users')[paymentKey].append({
-#                'place': 0,
-                'name': name,
-                'surname': surname,
-                'patronymic': patronymic,
-                'spec': spec,
-                'score': score,
-                'payment': payment
-            })
+
+            if (selectedPaymentName == payment and selectedSpecName == spec):
+                fullDataObj[specKey].get('users')[paymentKey].append({
+#                    'place': 0,
+                    'name': name,
+                    'surname': surname,
+                    'patronymic': patronymic,
+                    'spec': spec,
+                    'score': score,
+                    'payment': payment
+                })
+            elif (selectedPaymentName == '' and selectedSpecName == ''):
+                fullDataObj[specKey].get('users')[paymentKey].append({
+                    'name': name,
+                    'surname': surname,
+                    'patronymic': patronymic,
+                    'spec': spec,
+                    'score': score,
+                    'payment': payment
+                })
         row = row + 1
 
     def keyFunc(item):
