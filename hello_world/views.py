@@ -8,7 +8,7 @@ def hello_world(request):
     THIS_PROJ_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     FILENAME = 'example.xlsx'
     START_ROW = 2
-    TAB_NAME = 'Реестр заявлений ПОО на 2020-06'
+    TAB_NUMBER = 0
     NOT_FOUND = 'Нет подходящих результатов по текущему запросу...'
     fullDataObj = {}
     selectedSpec = 0
@@ -41,10 +41,10 @@ def hello_world(request):
     paymentList = {
         0: 'Бюджет',
         1: 'Контракт',
-        2: 'Целевое обучение'
+#        2: 'Целевое обучение'
     }
     paymentListReversed = {}
-    paymentListLen = 3
+    paymentListLen = 2
 
     json = False
     if(request.GET.get('json')=='1'):
@@ -60,7 +60,7 @@ def hello_world(request):
         selectedPaymentName = paymentList[selectedPayment]
 
     wb = openpyxl.load_workbook(filename = THIS_PROJ_DIR+'/xlsx/'+FILENAME)
-    sheet = wb[TAB_NAME]
+    sheet = wb.worksheets[TAB_NUMBER]
 
     for key, value in specsList.items():
         specsListReversed[value] = key
@@ -75,7 +75,7 @@ def hello_world(request):
             'users': {
                 0: [],          # Бюджет
                 1: [],          # Контракт
-                2: []           # Целевое
+#                2: []           # Целевое
             }
         }
 
@@ -83,14 +83,14 @@ def hello_world(request):
     while (sheet['B'+str(row)].value and row < LIMIT_ROWS):
         score = sheet['L'+str(row)].value.capitalize()
         status = sheet['P'+str(row)].value.capitalize()
-        if (score and status == 'Принято к рассмотрению'):
+        payment = sheet['M'+str(row)].value.capitalize()
+        if (score and status == 'Принято к рассмотрению' and (payment == 'Бюджет' or payment == 'Контракт')):
             score = float(score)
             name = sheet['B'+str(row)].value.capitalize()
             surname = sheet['C'+str(row)].value.capitalize()
             patronymic =  sheet['D'+str(row)].value.capitalize()
             spec = sheet['K'+str(row)].value
             specKey = specsListReversed[spec]
-            payment = sheet['M'+str(row)].value.capitalize()
             paymentKey = paymentListReversed[payment]
 
             if (selectedPaymentName == payment and selectedSpecName == spec):
