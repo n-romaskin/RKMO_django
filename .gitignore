@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+.idea
+*.iml
+__pycache__/
+migrations/__pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
