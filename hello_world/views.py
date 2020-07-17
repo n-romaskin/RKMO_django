@@ -6,7 +6,7 @@ from django.shortcuts import render
 def hello_world(request):
     LIMIT_ROWS = 20000
     THIS_PROJ_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    FILENAME = 'Реестр заявлений ПОО на 2020-06-29.xlsx'
+    FILENAME = 'example.xlsx'
     START_ROW = 2
     TAB_NAME = 'Реестр заявлений ПОО на 2020-06'
     NOT_FOUND = 'Нет подходящих результатов по текущему запросу...'
